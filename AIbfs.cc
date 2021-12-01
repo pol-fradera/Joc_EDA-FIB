@@ -45,14 +45,18 @@ struct PLAYER_NAME : public Player {
     map<Pos,Pos> m;
     //vector<bool> trob(files*columnes,false);
     q.push(origen);
-    m.insert(origen,origen);
+    m[origen] = origen;
     while (not q.empty()) {
       Pos actual = q.front();
       Cell c = cell(actual);
       q.pop();
-      if (c.type == CITY) {
-        while ()
-        return m[actual];
+      if (c.type == CITY and city_owner(c.city_id) != me()) {
+        Pos dest = actual;
+        while (m[dest] != origen) {
+          dest = m[dest];
+        }
+        return dest;
+      }
       for (int i = 0; i < 4; ++i) {
         Pos u = actual+Dir(i);
         Cell c1 = cell(u);
@@ -94,3 +98,4 @@ struct PLAYER_NAME : public Player {
  * Do not modify the following line.
  */
 RegisterPlayer(PLAYER_NAME);
+
